@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Gear } from "@phosphor-icons/react";
-import Button from "@/components/atoms/Button";
+// import { Gear } from "@phosphor-icons/react";
+// import Button from "@/components/atoms/Button";
 
 export default function Header() {
   const router = useRouter();

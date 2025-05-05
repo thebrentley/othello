@@ -2,9 +2,9 @@ import { getOutflankCells, getValidMoves } from "@/utils/game.utils";
 import { formSystemPrompt } from "@/utils/prompt.utils";
 import Anthropic from "@anthropic-ai/sdk";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { QdrantClient } from "@qdrant/js-client-rest";
-import { Document } from "@langchain/core/documents";
-import { VoyageEmbeddings } from "@langchain/community/embeddings/voyage";
+// import { QdrantClient } from "@qdrant/js-client-rest";
+// import { Document } from "@langchain/core/documents";
+// import { VoyageEmbeddings } from "@langchain/community/embeddings/voyage";
 import {
   CORNER_STABLE_FORCE_STRATEGY,
   CORNER_STABLE_STRATEGY,
@@ -51,20 +51,20 @@ const initialState: GameState = {
   lastPlayerTurnSkipped: false,
 };
 
-const qdrantClient = new QdrantClient({
-  url: process.env.NEXT_PUBLIC_QDRANT_URL || "http://localhost:6333",
-  apiKey: process.env.NEXT_PUBLIC_QDRANT_API_KEY,
-});
+// const qdrantClient = new QdrantClient({
+//   url: process.env.NEXT_PUBLIC_QDRANT_URL || "http://localhost:6333",
+//   apiKey: process.env.NEXT_PUBLIC_QDRANT_API_KEY,
+// });
 
 const anthropic = new Anthropic({
   dangerouslyAllowBrowser: true,
   apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
 });
 
-const embeddings = new VoyageEmbeddings({
-  apiKey: process.env.NEXT_PUBLIC_VOYAGE_API_KEY,
-  modelName: "voyage-3",
-});
+// const embeddings = new VoyageEmbeddings({
+//   apiKey: process.env.NEXT_PUBLIC_VOYAGE_API_KEY,
+//   modelName: "voyage-3",
+// });
 
 // async function getEmbeddings(text: string): Promise<number[]> {
 //   const doc = new Document({
@@ -74,28 +74,28 @@ const embeddings = new VoyageEmbeddings({
 //   return docEmbeddings[0];
 // }
 
-export async function insertKnowledge(id: string, key: string, text: string) {
-  const doc = new Document({
-    pageContent: text,
-    metadata: {
-      key,
-    },
-  });
-  const vector = await embeddings.embedDocuments([doc.pageContent]);
+// export async function insertKnowledge(id: string, key: string, text: string) {
+//   const doc = new Document({
+//     pageContent: text,
+//     metadata: {
+//       key,
+//     },
+//   });
+//   const vector = await embeddings.embedDocuments([doc.pageContent]);
 
-  await qdrantClient.upsert("othello", {
-    points: [
-      {
-        id: parseInt(id),
-        vector: vector[0],
-        payload: {
-          text,
-          key,
-        },
-      },
-    ],
-  });
-}
+//   await qdrantClient.upsert("othello", {
+//     points: [
+//       {
+//         id: parseInt(id),
+//         vector: vector[0],
+//         payload: {
+//           text,
+//           key,
+//         },
+//       },
+//     ],
+//   });
+// }
 
 const handlePoorResponse = (response: string) => {
   // from the response, extract the row and col
@@ -215,8 +215,9 @@ export const makeComputerMove = createAsyncThunk(
 // Add this thunk for inserting knowledge
 export const insertKnowledgeAction = createAsyncThunk(
   "game/insertKnowledge",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async ({ id, key, text }: { id: string; key: string; text: string }) => {
-    await insertKnowledge(id, key, text);
+    // await insertKnowledge(id, key, text);
   }
 );
 

@@ -45,7 +45,7 @@ const GameBoard: React.FC = () => {
 
   useEffect(() => {
     dispatch(resetLastPlayerTurnSkipped());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     // if there are no valid moves for the current player, proceed to the next player
