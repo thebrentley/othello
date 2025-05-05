@@ -1,6 +1,5 @@
 "use client";
 import GameSetup from "@/components/organisms/GameSetup";
-import Game from "./game/page";
 import { useAppDispatch, useAppSelector } from "@/store";
 import Button from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
